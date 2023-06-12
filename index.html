@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <h1>Welcome to the Voting App</h1>
+</header>
+<main>
+    <div id="pollsContainer">
+        <!-- Polls will be inserted here -->
+    </div>
+    <ul id="pollOptions" class="poll-options">
+        <!-- Poll options will be inserted here -->
+    </ul>
+    <button id="voteButton">Vote</button>
+</main>
+
+<script src="scripts.js"></script>
+<script>
+    document.getElementById('voteButton').addEventListener('click', function() {
+        let options = Array.from(document.getElementById('pollOptions').children);
+        let vote = options.map(option => option.id);
+        fetch('/vote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ vote }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle response
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>
